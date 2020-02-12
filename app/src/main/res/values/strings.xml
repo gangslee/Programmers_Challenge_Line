@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="addImageBt">이미지 추가</string>
+    <string name="writeTitleText">제목</string>
+    <string name="writeDetailText">내용</string>
+
+</resources>

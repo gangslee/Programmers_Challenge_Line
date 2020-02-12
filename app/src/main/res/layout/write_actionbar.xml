@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_vertical"
+    android:background="@color/memoLineMain"
+    android:id="@+id/writeActionBar"
+    android:layout_width="match_parent"
+    android:layout_height="56dp">
+
+
+    <TextView
+        android:text="저장"
+        android:id="@+id/saveMemo"
+        android:textSize="25dp"
+        android:textColor="#fff"
+        android:gravity="center_vertical|end"
+        android:textStyle="bold"
+        android:layout_marginEnd="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</androidx.appcompat.widget.Toolbar>
+
