@@ -19,24 +19,18 @@
         android:layout_marginEnd="20dp"
         android:text="@string/addImageBt" />
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="120dp"-->
-<!--        android:layout_below="@+id/addImageBt"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:id="@+id/imageList">-->
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="100dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
             android:layout_below="@+id/addImageBt"
-            android:id="@+id/imageList"
-            app:srcCompat="@mipmap/ic_launcher"/>
-<!--    </androidx.recyclerview.widget.RecyclerView>-->
-<!--        android:background="@color/cardview_dark_background" -->
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:id="@+id/imageList">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
 
 
     <EditText

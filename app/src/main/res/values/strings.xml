@@ -3,5 +3,8 @@
     <string name="addImageBt">이미지 추가</string>
     <string name="writeTitleText">제목</string>
     <string name="writeDetailText">내용</string>
+    <string name="imageDialogTitleText">사진 선택하기</string>
+    <string name="dialogOk">확인</string>
+    <string name="dialogCancel">취소</string>
 
 </resources>
