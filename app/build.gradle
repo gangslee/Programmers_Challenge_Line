@@ -39,10 +39,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.1.0'
 
+    implementation 'androidx.room:room-runtime:2.2.3'
+    kapt 'androidx.room:room-compiler:2.2.3' //room
 
     implementation 'gun0912.ted:tedpermission:2.2.2'    //tedpermission
     implementation 'gun0912.ted:tedimagepicker:1.0.12'  //tedimagepicker
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'  //glide
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'//glide
+
 
 }

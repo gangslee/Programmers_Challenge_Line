@@ -7,15 +7,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var writeIntent = Intent()
+  var writeIntent = Intent()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
 
-        fab.setOnClickListener {
-            writeIntent = Intent(applicationContext, WriteActivity::class.java)
-            startActivity(writeIntent)
-        }
+    fab.setOnClickListener {
+      writeIntent = Intent(applicationContext, WriteActivity::class.java)
+      startActivity(writeIntent)
     }
+  }
 }

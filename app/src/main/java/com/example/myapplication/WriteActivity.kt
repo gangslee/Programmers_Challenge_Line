@@ -10,20 +10,25 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
+import com.example.myapplication.aboutDB.AppDatabase
+import com.example.myapplication.aboutDB.entity.ImgData
+import com.example.myapplication.aboutDB.entity.WriteData
 import com.example.myapplication.adapters.AddImgAdapter
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.android.synthetic.main.activity_write.*
 import kotlinx.android.synthetic.main.write_actionbar.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class WriteActivity : AppCompatActivity() {
 
     private val dialogText = arrayOf("이미지 선택 & 촬영하기", "외부 이미지 선택하기")
-    var imgDataList : ArrayList<String>? = null
-    private var imgAdapter : AddImgAdapter? = null
-
+    var imgDataList : ArrayList<String> = arrayListOf()
+    private var imgAdapter : AddImgAdapter = AddImgAdapter(this, imgDataList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +47,13 @@ class WriteActivity : AppCompatActivity() {
         imageList.layoutManager = lm
         imageList.setHasFixedSize(true)
 
-        imgDataList = arrayListOf()
-        imgAdapter = AddImgAdapter(this, imgDataList as ArrayList<String>)
+
+        imgAdapter.btClick = object : AddImgAdapter.BtClick{
+            override fun btClick(position: Int) {
+                imgDataList.removeAt(position)
+                imgAdapter.notifyDataSetChanged()
+            }
+        }
         imageList.adapter = imgAdapter
 
         TedPermission.with(this)
@@ -62,9 +72,23 @@ class WriteActivity : AppCompatActivity() {
                 .check()
 
         addImageBt.setOnClickListener { showDialogList() }
-        saveMemo.setOnClickListener { toast("123") }
-    }
 
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "PostDB"
+        )
+            .allowMainThreadQueries()
+            .build()
+
+        saveMemo.setOnClickListener {
+            val currentTime: Date = Calendar.getInstance().time
+            val formatTime: String = SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분", Locale.getDefault()).format(currentTime)
+            db.postDao().insertText(WriteData(writeTitleText.text.toString(), writeDetailText.text.toString(), formatTime))
+            for(i in 0 until imgDataList.size){
+                db.postDao().insertImg(ImgData(imgDataList[i],formatTime))
+            }
+        }
+    }
 
     private fun showDialogList(){
         val builder = AlertDialog.Builder(this@WriteActivity)
@@ -84,9 +108,9 @@ class WriteActivity : AppCompatActivity() {
                     TedImagePicker.with(this)
                             .startMultiImage { uriList ->
                                 for(i in uriList.indices){
-                                    imgDataList?.add(uriList[i].toString())
+                                    imgDataList.add(uriList[i].toString())
                                 }
-                                imgAdapter!!.notifyDataSetChanged()
+                                imgAdapter.notifyDataSetChanged()
                             }
                 }
                 else -> showDialogInput()
@@ -112,8 +136,8 @@ class WriteActivity : AppCompatActivity() {
             val inputUrl = view.findViewById<EditText>(R.id.input_imgae_url)
             val imgUrl : String = inputUrl.text.toString()
             if(URLUtil.isValidUrl(imgUrl)){
-                imgDataList?.add(imgUrl)
-                imgAdapter!!.notifyDataSetChanged()
+                imgDataList.add(imgUrl)
+                imgAdapter.notifyDataSetChanged()
             }
             else{
                 toast("잘못된 이미지 주소를 입력하셨습니다!")
@@ -127,7 +151,6 @@ class WriteActivity : AppCompatActivity() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
-
 
     private fun Context.toast(message:String){
         Toast.makeText(applicationContext,message,Toast.LENGTH_LONG).show()

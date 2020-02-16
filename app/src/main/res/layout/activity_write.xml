@@ -43,7 +43,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/writeTitleText"
-        android:textSize="25dp" />
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/writeDetailText"
@@ -56,5 +56,7 @@
         android:background="@null"
         android:hint="@string/writeDetailText"
         android:paddingStart="5dp"
-        android:textSize="20dp" />
+        android:paddingEnd="5dp"
+        android:textSize="20sp" />
+
 </RelativeLayout>
