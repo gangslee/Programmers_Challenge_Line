@@ -1,11 +1,9 @@
 package com.example.myapplication.aboutDB
 
 import androidx.room.*
-import com.example.myapplication.aboutDB.dao.PostDao
-import com.example.myapplication.aboutDB.entity.ImgData
-import com.example.myapplication.aboutDB.entity.WriteData
 
-@Database(entities = [ImgData::class, WriteData::class], version = 1)
+@Database(entities = [PostData::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun postDao(): PostDao
 }

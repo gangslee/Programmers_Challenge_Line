@@ -9,17 +9,19 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
-import com.example.myapplication.aboutDB.AppDatabase
-import com.example.myapplication.aboutDB.entity.ImgData
-import com.example.myapplication.aboutDB.entity.WriteData
+import com.example.myapplication.aboutDB.PostData
 import com.example.myapplication.adapters.AddImgAdapter
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.android.synthetic.main.activity_write.*
 import kotlinx.android.synthetic.main.write_actionbar.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,7 +35,6 @@ class WriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
-
         val toolbar : Toolbar = findViewById(R.id.writeActionBar)
         setSupportActionBar(toolbar)
         val actionBarTemp = supportActionBar
@@ -73,20 +74,17 @@ class WriteActivity : AppCompatActivity() {
 
         addImageBt.setOnClickListener { showDialogList() }
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "PostDB"
-        )
-            .allowMainThreadQueries()
-            .build()
+        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         saveMemo.setOnClickListener {
             val currentTime: Date = Calendar.getInstance().time
             val formatTime: String = SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분", Locale.getDefault()).format(currentTime)
-            db.postDao().insertText(WriteData(writeTitleText.text.toString(), writeDetailText.text.toString(), formatTime))
-            for(i in 0 until imgDataList.size){
-                db.postDao().insertImg(ImgData(imgDataList[i],formatTime))
+            lifecycleScope.launch (Dispatchers.IO){
+                viewModel.insert(
+                    PostData(writeTitleText.text.toString(), writeDetailText.text.toString(), imgDataList.toString(), formatTime)
+                )
             }
+
         }
     }
 

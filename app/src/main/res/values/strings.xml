@@ -6,5 +6,6 @@
     <string name="imageDialogTitleText">사진 선택하기</string>
     <string name="dialogOk">확인</string>
     <string name="dialogCancel">취소</string>
+    <string name="save">저장</string>
 
 </resources>

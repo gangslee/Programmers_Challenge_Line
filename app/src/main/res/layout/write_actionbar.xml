@@ -7,15 +7,16 @@
     android:layout_height="56dp">
 
 
-  <TextView
-      android:text="저장"
+  <Button
+      android:text="@string/save"
       android:id="@+id/saveMemo"
-      android:textSize="25dp"
+      android:textSize="22sp"
       android:textColor="#fff"
-      android:gravity="center_vertical|end"
+      android:layout_gravity="center_vertical|end"
       android:textStyle="bold"
       android:layout_marginEnd="40dp"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
+      android:background="@android:color/transparent"
       android:layout_height="match_parent" />
 
 </androidx.appcompat.widget.Toolbar>
