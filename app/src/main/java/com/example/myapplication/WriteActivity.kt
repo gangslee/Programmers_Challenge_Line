@@ -1,15 +1,16 @@
 package com.example.myapplication
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.TextUtils
 import android.webkit.URLUtil
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,7 @@ class WriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
+
         val toolbar : Toolbar = findViewById(R.id.writeActionBar)
         setSupportActionBar(toolbar)
         val actionBarTemp = supportActionBar
@@ -77,14 +79,29 @@ class WriteActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         saveMemo.setOnClickListener {
-            val currentTime: Date = Calendar.getInstance().time
-            val formatTime: String = SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분", Locale.getDefault()).format(currentTime)
-            lifecycleScope.launch (Dispatchers.IO){
-                viewModel.insert(
-                    PostData(writeTitleText.text.toString(), writeDetailText.text.toString(), imgDataList.toString(), formatTime)
-                )
-            }
+            if (TextUtils.isEmpty(writeTitleText.text) && TextUtils.isEmpty(writeDetailText.text)) toast("내용이 입력되지 않았습니다.")
+            else {
+                val intentToMain = Intent(applicationContext, MainActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
+                val currentTime: Date = Calendar.getInstance().time
+                val formatTime: String =
+                    SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분", Locale.getDefault()).format(
+                        currentTime
+                    )
+                lifecycleScope.launch(Dispatchers.IO) {
+                    viewModel.insert(
+                        PostData(
+                            writeTitleText.text.toString(),
+                            writeDetailText.text.toString(),
+                            imgDataList.toString(),
+                            formatTime
+                        )
+                    )
+                    startActivity(intentToMain)
+                }
+
+            }
         }
     }
 

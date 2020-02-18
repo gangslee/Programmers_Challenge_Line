@@ -55,6 +55,4 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version" //viewmodel
 
-    kapt 'androidx.databinding:databinding-compiler-common:5.4.1'
-
 }

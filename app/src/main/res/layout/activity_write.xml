@@ -1,69 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
 
-    </data>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WriteActivity">
 
-    <RelativeLayout
+    <include
+        layout="@layout/write_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/addImageBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/addImageBt" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/imageList"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/addImageBt"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"/>
+
+    <EditText
+        android:id="@+id/writeTitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageList"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:imeOptions="actionNext"
+        android:hint="@string/writeTitleText"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/writeDetailText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".WriteActivity">
+        android:layout_below="@+id/writeTitleText"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="top"
+        android:background="@null"
+        android:hint="@string/writeDetailText"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textSize="15sp" />
 
-        <include layout="@layout/write_actionbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/addImageBt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="76dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/addImageBt" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_below="@+id/addImageBt"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:id="@+id/imageList">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-
-
-        <EditText
-            android:id="@+id/writeTitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageList"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:hint="@string/writeTitleText"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/writeDetailText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/writeTitleText"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:background="@null"
-            android:hint="@string/writeDetailText"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textSize="20sp" />
-
-    </RelativeLayout>
-</layout>
+</RelativeLayout>

@@ -33,10 +33,10 @@ class AddImgAdapter(private val context: Context, data : ArrayList<String>) : Re
     }
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
+        if(position == 0) holder.icon?.visibility = View.VISIBLE
         val options = RequestOptions()
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-        if(position == 0) holder.icon?.visibility = View.VISIBLE
         Glide.with(context).load(Image[position]).apply(options).into(holder.img as ImageView)
         holder.bt?.setOnClickListener {
             btClick?.btClick(position)

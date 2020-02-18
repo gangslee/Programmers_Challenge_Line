@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:layout_margin="10dp"
+    android:padding="15dp"
+    android:elevation="5dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="5dp"
+        android:elevation="3dp"
+        android:id="@+id/memo_format_thumbnail"
+        android:background="@drawable/border_thumbnail"
+        android:fitsSystemWindows="true"/>
+
+    <TextView
+        android:id="@+id/memo_format_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/memo_format_thumbnail"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="8dp"
+        android:textSize="24sp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/memo_format_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/memo_format_title"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="10dp"
+        android:textSize="12sp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/memo_format_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/memo_format_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="12sp"
+        android:text="TextView" />
+
+</RelativeLayout>
