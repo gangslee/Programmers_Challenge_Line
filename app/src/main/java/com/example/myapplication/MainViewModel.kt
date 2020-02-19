@@ -20,4 +20,8 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
     suspend fun insert(postData: PostData){
         db.postDao().insert(postData)
     }
+
+    suspend fun delete(id: Int){
+        db.postDao().delete(id)
+    }
 }

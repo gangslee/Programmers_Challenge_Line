@@ -16,10 +16,10 @@ import com.example.myapplication.R
 
 class AddImgAdapter(private val context: Context, data : ArrayList<String>) : RecyclerView.Adapter<AddImgAdapter.ListItemViewHolder>(){
 
-    val Image = data
+    private val image = data
 
     interface BtClick{
-        fun btClick(position: Int)
+        fun onClick(position: Int)
     }
     var btClick : BtClick? = null
 
@@ -29,7 +29,7 @@ class AddImgAdapter(private val context: Context, data : ArrayList<String>) : Re
     }
 
     override fun getItemCount(): Int {
-        return Image.size
+        return image.size
     }
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
@@ -37,9 +37,9 @@ class AddImgAdapter(private val context: Context, data : ArrayList<String>) : Re
         val options = RequestOptions()
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-        Glide.with(context).load(Image[position]).apply(options).into(holder.img as ImageView)
+        Glide.with(context).load(image[position]).apply(options).into(holder.img as ImageView)
         holder.bt?.setOnClickListener {
-            btClick?.btClick(position)
+            btClick?.onClick(position)
         }
     }
 

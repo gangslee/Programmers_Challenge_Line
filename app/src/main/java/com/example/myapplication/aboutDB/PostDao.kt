@@ -15,6 +15,6 @@ interface PostDao {
     @Update
     fun update(postData: PostData)
 
-    @Delete
-    fun delete(postData: PostData)
+    @Query("Delete FROM PostData WHERE id = :id")
+    fun delete(id : Int)
 }

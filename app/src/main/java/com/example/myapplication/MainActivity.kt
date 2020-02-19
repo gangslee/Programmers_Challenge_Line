@@ -20,9 +20,10 @@ import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
-  var writeIntent = Intent()
-  var memoFormatList : ArrayList<PostData> = arrayListOf()
-  var memoAdapter : AddMemoAdapter = AddMemoAdapter(this, memoFormatList)
+  private var writeIntent = Intent()
+  private var memoFormatList : ArrayList<PostData> = arrayListOf()
+  private var memoAdapter : AddMemoAdapter = AddMemoAdapter(this, memoFormatList)
+  private var detailTextList : ArrayList<String> = arrayListOf()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -32,6 +33,19 @@ class MainActivity : AppCompatActivity() {
     memoList.layoutManager = lm
     memoList.setHasFixedSize(true)
     memoList.adapter = memoAdapter
+    memoAdapter.memoClick = object : AddMemoAdapter.MemoClick{
+      override fun onClick(position: Int) {
+        detailTextList.clear()
+        detailTextList
+          .addAll(arrayListOf(memoFormatList[position].title, memoFormatList[position].content,
+            memoFormatList[position].imgList, memoFormatList[position].date, memoFormatList[position].id.toString()))
+
+        val intentToDetail = Intent(applicationContext, DetailActivity::class.java)
+        intentToDetail.putExtra("txtList", detailTextList)
+        startActivity(intentToDetail)
+      }
+
+    }
 
     val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     viewModel.getAll().observe(this, Observer {

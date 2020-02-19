@@ -18,7 +18,12 @@ import com.example.myapplication.aboutDB.PostData
 
 class AddMemoAdapter(private val context: Context, data : ArrayList<PostData>) : RecyclerView.Adapter<AddMemoAdapter.ListItemViewHolder>(){
 
-    val pd = data
+    private val pd = data
+
+    interface MemoClick{
+        fun onClick(position: Int)
+    }
+    var memoClick : MemoClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.memo_format, parent, false)
@@ -34,12 +39,18 @@ class AddMemoAdapter(private val context: Context, data : ArrayList<PostData>) :
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
         Glide.with(context)
-            .load(pd[position].imgList.substring(1, pd[position].imgList.length-1).split(",")[0])
+            .load(pd[position].imgList.substring(1, pd[position].imgList.length-1).split(", ")[0])
             .apply(options)
             .into(holder.img as ImageView)
         holder.title?.text = pd[position].title
         holder.content?.text = pd[position].content
         holder.date?.text = pd[position].date
+        if(memoClick != null){
+            holder.itemView.setOnClickListener {
+                memoClick?.onClick(position)
+            }
+        }
+
     }
 
     inner class ListItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

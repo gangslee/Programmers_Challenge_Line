@@ -23,8 +23,9 @@
         android:layout_below="@id/memo_format_thumbnail"
         android:layout_marginBottom="5dp"
         android:layout_marginStart="8dp"
-        android:textSize="24sp"
-        android:text="TextView" />
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/memo_format_content"
@@ -33,8 +34,9 @@
         android:layout_below="@id/memo_format_title"
         android:layout_marginBottom="5dp"
         android:layout_marginStart="10dp"
-        android:textSize="12sp"
-        android:text="TextView" />
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/memo_format_date"
@@ -44,7 +46,6 @@
         android:layout_below="@id/memo_format_content"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="10dp"
-        android:textSize="12sp"
-        android:text="TextView" />
+        android:textSize="12sp" />
 
 </RelativeLayout>

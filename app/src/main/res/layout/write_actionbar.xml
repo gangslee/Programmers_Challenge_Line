@@ -2,15 +2,15 @@
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center_vertical"
     android:background="@color/memoLineMain"
-    android:id="@+id/writeActionBar"
+    android:id="@+id/write_actionBar"
     android:layout_width="match_parent"
     android:layout_height="56dp">
 
 
   <Button
       android:text="@string/save"
-      android:id="@+id/saveMemo"
-      android:textSize="22sp"
+      android:id="@+id/save_memo"
+      android:textSize="20sp"
       android:textColor="#fff"
       android:layout_gravity="center_vertical|end"
       android:textStyle="bold"

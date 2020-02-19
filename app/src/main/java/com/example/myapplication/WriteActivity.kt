@@ -37,7 +37,7 @@ class WriteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
 
-        val toolbar : Toolbar = findViewById(R.id.writeActionBar)
+        val toolbar : Toolbar = findViewById(R.id.write_actionBar)
         setSupportActionBar(toolbar)
         val actionBarTemp = supportActionBar
         actionBarTemp?.apply {
@@ -52,7 +52,7 @@ class WriteActivity : AppCompatActivity() {
 
 
         imgAdapter.btClick = object : AddImgAdapter.BtClick{
-            override fun btClick(position: Int) {
+            override fun onClick(position: Int) {
                 imgDataList.removeAt(position)
                 imgAdapter.notifyDataSetChanged()
             }
@@ -78,7 +78,7 @@ class WriteActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        saveMemo.setOnClickListener {
+        save_memo.setOnClickListener {
             if (TextUtils.isEmpty(writeTitleText.text) && TextUtils.isEmpty(writeDetailText.text)) toast("내용이 입력되지 않았습니다.")
             else {
                 val intentToMain = Intent(applicationContext, MainActivity::class.java)
@@ -165,6 +165,11 @@ class WriteActivity : AppCompatActivity() {
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        toast("작성중인 메모가 저장되지 않았습니다.")
     }
 
     private fun Context.toast(message:String){
