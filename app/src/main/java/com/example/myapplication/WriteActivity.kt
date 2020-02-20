@@ -25,19 +25,33 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class WriteActivity : AppCompatActivity() {
 
     private val dialogText = arrayOf("이미지 선택 & 촬영하기", "외부 이미지 선택하기")
-    var imgDataList : ArrayList<String> = arrayListOf()
-    private var imgAdapter : AddImgAdapter = AddImgAdapter(this, imgDataList)
+    var imgDataList: ArrayList<String> = arrayListOf()
+    private var imgAdapter: AddImgAdapter = AddImgAdapter(this, imgDataList)
+    private var isNew : Boolean = false
+    private var txtList : ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
 
-        val toolbar : Toolbar = findViewById(R.id.write_actionBar)
+        if(intent.extras?.getBoolean("isNew") as Boolean){
+            isNew = intent.extras?.getBoolean("isNew") as Boolean
+            txtList = intent.extras?.getStringArrayList("txtList") as ArrayList<String>
+
+            writeTitleText.setText(txtList[0], TextView.BufferType.EDITABLE)
+            writeDetailText.setText(txtList[1], TextView.BufferType.EDITABLE)
+            imgDataList.addAll(txtList[2].substring(1, txtList[2].length-1).split(", "))
+            imgAdapter.notifyDataSetChanged()
+        }
+
+
+        val toolbar: Toolbar = findViewById(R.id.write_actionBar)
         setSupportActionBar(toolbar)
         val actionBarTemp = supportActionBar
         actionBarTemp?.apply {
@@ -51,7 +65,7 @@ class WriteActivity : AppCompatActivity() {
         imageList.setHasFixedSize(true)
 
 
-        imgAdapter.btClick = object : AddImgAdapter.BtClick{
+        imgAdapter.btClick = object : AddImgAdapter.BtClick {
             override fun onClick(position: Int) {
                 imgDataList.removeAt(position)
                 imgAdapter.notifyDataSetChanged()
@@ -60,26 +74,31 @@ class WriteActivity : AppCompatActivity() {
         imageList.adapter = imgAdapter
 
         TedPermission.with(this)
-                .setPermissionListener(object : PermissionListener{
-                    override fun onPermissionGranted() { toast("권한이 승인되었습니다.") }
+            .setPermissionListener(object : PermissionListener {
+                override fun onPermissionGranted() {
+                    toast("권한이 승인되었습니다.")
+                }
 
-                    override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                        println(deniedPermissions)
-                        toast("권한이 거부되었습니다.")
-                    }
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                    println(deniedPermissions)
+                    toast("권한이 거부되었습니다.")
+                }
 
-                })
-                .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                        android.Manifest.permission.INTERNET)
-                .check()
+            })
+            .setPermissions(
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.INTERNET
+            )
+            .check()
 
         addImageBt.setOnClickListener { showDialogList() }
 
         val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         save_memo.setOnClickListener {
-            if (TextUtils.isEmpty(writeTitleText.text) && TextUtils.isEmpty(writeDetailText.text)) toast("내용이 입력되지 않았습니다.")
+            if (TextUtils.isEmpty(writeTitleText.text) && TextUtils.isEmpty(writeDetailText.text))
+                toast("내용이 입력되지 않았습니다.")
             else {
                 val intentToMain = Intent(applicationContext, MainActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -90,22 +109,32 @@ class WriteActivity : AppCompatActivity() {
                         currentTime
                     )
                 lifecycleScope.launch(Dispatchers.IO) {
-                    viewModel.insert(
-                        PostData(
+                    if(isNew){
+                        viewModel.update(
                             writeTitleText.text.toString(),
                             writeDetailText.text.toString(),
                             imgDataList.toString(),
-                            formatTime
+                            formatTime,
+                            txtList[4].toInt()
                         )
-                    )
+                    }
+                    else{
+                        viewModel.insert(
+                            PostData(
+                                writeTitleText.text.toString(),
+                                writeDetailText.text.toString(),
+                                imgDataList.toString(),
+                                formatTime
+                            )
+                        )
+                    }
                     startActivity(intentToMain)
                 }
-
             }
         }
     }
 
-    private fun showDialogList(){
+    private fun showDialogList() {
         val builder = AlertDialog.Builder(this@WriteActivity)
         val inflater = layoutInflater
         val view = inflater.inflate(R.layout.select_image_dialog, null)
@@ -115,29 +144,35 @@ class WriteActivity : AppCompatActivity() {
         val dialog = builder.create()
 
         val arrayAdapter =
-            ArrayAdapter<String>(this@WriteActivity,R.layout.image_dialog_listview,R.id.alertDialogItemTextView, dialogText)
+            ArrayAdapter<String>(
+                this@WriteActivity,
+                R.layout.image_dialog_listview,
+                R.id.alertDialogItemTextView,
+                dialogText
+            )
         dialogListView.adapter = arrayAdapter
-        dialogListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position: Int, _ ->
-            when(position){
-                0 -> {
-                    TedImagePicker.with(this)
+        dialogListView.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position: Int, _ ->
+                when (position) {
+                    0 -> {
+                        TedImagePicker.with(this)
                             .startMultiImage { uriList ->
-                                for(i in uriList.indices){
+                                for (i in uriList.indices) {
                                     imgDataList.add(uriList[i].toString())
                                 }
                                 imgAdapter.notifyDataSetChanged()
                             }
+                    }
+                    else -> showDialogInput()
                 }
-                else -> showDialogInput()
+                dialog.dismiss()
             }
-            dialog.dismiss()
-        }
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
 
-    private fun showDialogInput(){
+    private fun showDialogInput() {
         val builder = AlertDialog.Builder(this@WriteActivity)
         val inflater = layoutInflater
         val view = inflater.inflate(R.layout.input_url_dialog, null)
@@ -146,15 +181,17 @@ class WriteActivity : AppCompatActivity() {
 
         val dialog = builder.create()
 
-        val inputBts = listOf<Button>(view.findViewById(R.id.input_dialog_ok), view.findViewById(R.id.input_dialog_cancel))
+        val inputBts = listOf<Button>(
+            view.findViewById(R.id.input_dialog_ok),
+            view.findViewById(R.id.input_dialog_cancel)
+        )
         inputBts[0].setOnClickListener {
             val inputUrl = view.findViewById<EditText>(R.id.input_imgae_url)
-            val imgUrl : String = inputUrl.text.toString()
-            if(URLUtil.isValidUrl(imgUrl)){
+            val imgUrl: String = inputUrl.text.toString()
+            if (URLUtil.isValidUrl(imgUrl)) {
                 imgDataList.add(imgUrl)
                 imgAdapter.notifyDataSetChanged()
-            }
-            else{
+            } else {
                 toast("잘못된 이미지 주소를 입력하셨습니다!")
             }
             dialog.dismiss()
@@ -172,8 +209,8 @@ class WriteActivity : AppCompatActivity() {
         toast("작성중인 메모가 저장되지 않았습니다.")
     }
 
-    private fun Context.toast(message:String){
-        Toast.makeText(applicationContext,message,Toast.LENGTH_LONG).show()
+    private fun Context.toast(message: String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }
 
 }

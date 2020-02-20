@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,11 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.myapplication.aboutDB.PostData
-import com.example.myapplication.adapters.AddImgAdapter
 import com.example.myapplication.adapters.ViewPagerAdapter
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.detail_actionbar.*
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +21,6 @@ class DetailActivity : AppCompatActivity() {
     private var vpImgList : ArrayList<String> = arrayListOf()
     private var txtList : ArrayList<String> = arrayListOf()
     private var vpAdapter : ViewPagerAdapter = ViewPagerAdapter(this, vpImgList)
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +44,17 @@ class DetailActivity : AppCompatActivity() {
         viewpager_detail.adapter = vpAdapter
         tab_layout.setupWithViewPager(viewpager_detail, true)
 
+        modify_Memo.setOnClickListener {
+            val intentToModify = Intent(applicationContext, WriteActivity::class.java)
+            intentToModify.putExtra("txtList", txtList).putExtra("isNew", true)
+            startActivity(intentToModify)
+        }
+
         delete_Memo.setOnClickListener {
             showDialogDelete()
         }
     }
+
     private fun showDialogDelete(){
         val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         val builder = AlertDialog.Builder(this@DetailActivity)

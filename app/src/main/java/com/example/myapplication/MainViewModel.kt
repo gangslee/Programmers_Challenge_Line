@@ -21,6 +21,10 @@ class MainViewModel(application : Application) : AndroidViewModel(application){
         db.postDao().insert(postData)
     }
 
+    suspend fun update(title: String, content: String, imgList: String, date: String, id: Int){
+        db.postDao().update(title, content, imgList, date, id)
+    }
+
     suspend fun delete(id: Int){
         db.postDao().delete(id)
     }

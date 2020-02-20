@@ -9,13 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.aboutDB.PostData
-import com.example.myapplication.adapters.AddImgAdapter
 import com.example.myapplication.adapters.AddMemoAdapter
-import com.example.myapplication.classes.MemoFormat
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_write.*
 import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -58,7 +53,6 @@ class MainActivity : AppCompatActivity() {
       startActivity(writeIntent)
     }
   }
-
 
   private fun Context.toast(message:String){
     Toast.makeText(applicationContext,message, Toast.LENGTH_LONG).show()
