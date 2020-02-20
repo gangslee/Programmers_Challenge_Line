@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
   private var memoFormatList : ArrayList<PostData> = arrayListOf()
   private var memoAdapter : AddMemoAdapter = AddMemoAdapter(this, memoFormatList)
   private var detailTextList : ArrayList<String> = arrayListOf()
+  private fun selector(l : PostData) : String = l.date
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     viewModel.getAll().observe(this, Observer {
       memoFormatList.addAll(it)
+      sorting()
       memoAdapter.notifyDataSetChanged()
     })
 
@@ -52,6 +54,11 @@ class MainActivity : AppCompatActivity() {
       writeIntent = Intent(applicationContext, WriteActivity::class.java)
       startActivity(writeIntent)
     }
+  }
+
+  private fun sorting(){
+    memoFormatList.sortBy {selector(it)}
+    memoFormatList.reverse()
   }
 
   private fun Context.toast(message:String){
