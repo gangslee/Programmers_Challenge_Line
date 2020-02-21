@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center_vertical"
-    android:background="@color/memoLineMain"
-    android:id="@+id/detail_actionBar"
     android:layout_width="match_parent"
-    android:layout_height="56dp">
+    android:layout_height="45dp"
+    android:background="@color/memoLineMain"
+    android:id="@+id/detail_actionBar">
 
     <Button
         android:text="@string/delete"
         android:id="@+id/delete_Memo"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="#fff"
         android:layout_gravity="center_vertical|end"
         android:textStyle="bold"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="25dp"
         android:layout_width="50dp"
         android:background="@android:color/transparent"
         android:layout_height="match_parent" />
@@ -21,12 +20,11 @@
     <Button
         android:text="@string/modify"
         android:id="@+id/modify_Memo"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="#fff"
         android:layout_gravity="center_vertical|end"
         android:textStyle="bold"
         android:layout_width="50dp"
-        android:layout_marginEnd="10dp"
         android:background="@android:color/transparent"
         android:layout_height="match_parent" />
 

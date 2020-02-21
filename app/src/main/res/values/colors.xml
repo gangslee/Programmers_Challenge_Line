@@ -2,7 +2,9 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+<!--    <color name="colorAccent">#D81B60</color>-->
+    <color name="colorAccent">#ED705E</color>
     <color name="memoLineMain">#00B900</color>
+    <color name="memoLineDark">#009700</color>
     <color name="colorBorder">#aaaaaa</color>
 </resources>

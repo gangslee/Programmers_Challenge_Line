@@ -34,14 +34,13 @@ class ViewPagerAdapter(private val context : Context, data : ArrayList<String>) 
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
 
-        Glide.with(context).load(image[position]).apply(options).into(img)
+        if(image.size==1 && image[0]=="") Glide.with(context).load(R.drawable.non_img).apply(options).into(img)
+        else Glide.with(context).load(image[position]).apply(options).into(img)
 
         val vp = container as ViewPager
         vp.addView(v , 0)
 
-
         return v
-
     }
 
 

@@ -38,10 +38,17 @@ class AddMemoAdapter(private val context: Context, data : ArrayList<PostData>) :
         val options = RequestOptions()
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-        Glide.with(context)
-            .load(pd[position].imgList.substring(1, pd[position].imgList.length-1).split(", ")[0])
-            .apply(options)
-            .into(holder.img as ImageView)
+
+        if(pd[position].imgList!="[]"){
+            Glide.with(context)
+                .load(pd[position].imgList.substring(1, pd[position].imgList.length-1).split(", ")[0])
+                .apply(options)
+                .into(holder.img as ImageView)
+        }
+        else{
+            Glide.with(context).load(R.drawable.non_img).apply(options).into(holder.img as ImageView)
+        }
+
         holder.title?.text = pd[position].title
         holder.content?.text = pd[position].content
         holder.date?.text = pd[position].date

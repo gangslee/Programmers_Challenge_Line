@@ -7,11 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+  <include
+      layout="@layout/main_actionbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/memoList"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_margin="10dp"/>
+      android:layout_marginTop="65dp"
+      android:layout_marginBottom="10dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"/>
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
       android:id="@+id/fab"
@@ -23,7 +31,7 @@
       android:layout_marginEnd="30dp"
       android:clickable="true"
       app:fabSize="normal"
-      android:src="@drawable/plus"
+      android:src="@drawable/edit"
       android:focusable="true" />
 
 

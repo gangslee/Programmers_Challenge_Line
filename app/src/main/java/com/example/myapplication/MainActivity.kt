@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,6 @@ import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
-  private var writeIntent = Intent()
   private var memoFormatList : ArrayList<PostData> = arrayListOf()
   private var memoAdapter : AddMemoAdapter = AddMemoAdapter(this, memoFormatList)
   private var detailTextList : ArrayList<String> = arrayListOf()
@@ -24,6 +24,14 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+
+    val toolbar: Toolbar = findViewById(R.id.main_actionBar)
+    setSupportActionBar(toolbar)
+    val actionBarTemp = supportActionBar
+    actionBarTemp?.apply {
+      setDisplayShowCustomEnabled(true)
+      setDisplayShowTitleEnabled(false)
+    }
 
     val lm = LinearLayoutManager(this@MainActivity)
     memoList.layoutManager = lm
@@ -51,7 +59,8 @@ class MainActivity : AppCompatActivity() {
     })
 
     fab.setOnClickListener {
-      writeIntent = Intent(applicationContext, WriteActivity::class.java)
+      val writeIntent = Intent(applicationContext, WriteActivity::class.java)
+      writeIntent.putExtra("isNew", true)
       startActivity(writeIntent)
     }
   }

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center_vertical"
-    android:background="@color/memoLineMain"
     android:id="@+id/write_actionBar"
     android:layout_width="match_parent"
-    android:layout_height="56dp">
-
+    android:layout_height="45dp"
+    android:background="@color/memoLineMain">
 
   <Button
       android:text="@string/save"
       android:id="@+id/save_memo"
-      android:textSize="20sp"
+      android:textSize="18sp"
       android:textColor="#fff"
       android:layout_gravity="center_vertical|end"
       android:textStyle="bold"
-      android:layout_marginEnd="40dp"
-      android:layout_width="wrap_content"
+      android:layout_marginEnd="25dp"
+      android:layout_width="50dp"
       android:background="@android:color/transparent"
       android:layout_height="match_parent" />
 

@@ -7,9 +7,10 @@
     <ImageView
         android:id="@+id/imageView_viewPager"
         android:layout_width="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:fitsSystemWindows="true"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/border_thumbnail"
+        android:elevation="5dp"
+        android:fitsSystemWindows="true" />
 
 </LinearLayout>

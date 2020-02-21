@@ -33,23 +33,23 @@ class WriteActivity : AppCompatActivity() {
     private val dialogText = arrayOf("이미지 선택 & 촬영하기", "외부 이미지 선택하기")
     var imgDataList: ArrayList<String> = arrayListOf()
     private var imgAdapter: AddImgAdapter = AddImgAdapter(this, imgDataList)
-    private var isNew : Boolean = false
+    private var isNew : Boolean = true
     private var txtList : ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
 
-        if(intent.extras?.getBoolean("isNew") as Boolean){
-            isNew = intent.extras?.getBoolean("isNew") as Boolean
+        isNew = intent.extras?.getBoolean("isNew") as Boolean
+        if(!isNew){
             txtList = intent.extras?.getStringArrayList("txtList") as ArrayList<String>
-
             writeTitleText.setText(txtList[0], TextView.BufferType.EDITABLE)
             writeDetailText.setText(txtList[1], TextView.BufferType.EDITABLE)
-            imgDataList.addAll(txtList[2].substring(1, txtList[2].length-1).split(", "))
-            imgAdapter.notifyDataSetChanged()
+            if(txtList[2]!="[]") {
+                imgDataList.addAll(txtList[2].substring(1, txtList[2].length - 1).split(", "))
+                imgAdapter.notifyDataSetChanged()
+            }
         }
-
 
         val toolbar: Toolbar = findViewById(R.id.write_actionBar)
         setSupportActionBar(toolbar)
@@ -63,7 +63,6 @@ class WriteActivity : AppCompatActivity() {
         lm.orientation = LinearLayoutManager.HORIZONTAL
         imageList.layoutManager = lm
         imageList.setHasFixedSize(true)
-
 
         imgAdapter.btClick = object : AddImgAdapter.BtClick {
             override fun onClick(position: Int) {
@@ -110,15 +109,6 @@ class WriteActivity : AppCompatActivity() {
                     )
                 lifecycleScope.launch(Dispatchers.IO) {
                     if(isNew){
-                        viewModel.update(
-                            writeTitleText.text.toString(),
-                            writeDetailText.text.toString(),
-                            imgDataList.toString(),
-                            formatTime,
-                            txtList[4].toInt()
-                        )
-                    }
-                    else{
                         viewModel.insert(
                             PostData(
                                 writeTitleText.text.toString(),
@@ -126,6 +116,15 @@ class WriteActivity : AppCompatActivity() {
                                 imgDataList.toString(),
                                 formatTime
                             )
+                        )
+                    }
+                    else{
+                        viewModel.update(
+                            writeTitleText.text.toString(),
+                            writeDetailText.text.toString(),
+                            imgDataList.toString(),
+                            formatTime,
+                            txtList[4].toInt()
                         )
                     }
                     startActivity(intentToMain)

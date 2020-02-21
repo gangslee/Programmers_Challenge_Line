@@ -42,11 +42,11 @@ class DetailActivity : AppCompatActivity() {
         vpImgList.addAll(txtList[2].substring(1, txtList[2].length-1).split(", "))
         vpAdapter.notifyDataSetChanged()
         viewpager_detail.adapter = vpAdapter
-        tab_layout.setupWithViewPager(viewpager_detail, true)
+        if(vpImgList[0]!="") tab_layout.setupWithViewPager(viewpager_detail, true)
 
         modify_Memo.setOnClickListener {
             val intentToModify = Intent(applicationContext, WriteActivity::class.java)
-            intentToModify.putExtra("txtList", txtList).putExtra("isNew", true)
+            intentToModify.putExtra("txtList", txtList).putExtra("isNew", false)
             startActivity(intentToModify)
         }
 
