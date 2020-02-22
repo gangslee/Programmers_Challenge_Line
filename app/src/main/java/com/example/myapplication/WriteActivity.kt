@@ -193,7 +193,8 @@ class WriteActivity : AppCompatActivity() {
         inputBts[0].setOnClickListener {
             val inputUrl = view.findViewById<EditText>(R.id.input_imgae_url)
             val imgUrl: String = inputUrl.text.toString()
-            if (URLUtil.isValidUrl(imgUrl)) {
+            val checkExt = imgUrl.substring(imgUrl.lastIndexOf(".")+1, imgUrl.length).toLowerCase(Locale.ENGLISH)
+            if (URLUtil.isValidUrl(imgUrl) && (checkExt == "jpg" || checkExt == "png" || checkExt == "gif") ) {
                 imgDataList.add(imgUrl)
                 imgAdapter.notifyDataSetChanged()
             } else {

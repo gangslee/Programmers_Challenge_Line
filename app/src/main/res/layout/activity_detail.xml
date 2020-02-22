@@ -27,7 +27,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
-                android:text="TextView"
                 android:textSize="14sp" />
 
             <androidx.viewpager.widget.ViewPager
@@ -58,7 +57,6 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="15dp"
-                android:text="TextView"
                 android:textSize="20sp" />
 
             <TextView
@@ -70,7 +68,6 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="15dp"
-                android:text="TextView"
                 android:textSize="15sp" />
 
 
