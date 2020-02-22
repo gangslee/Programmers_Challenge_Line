@@ -50,6 +50,7 @@ class WriteActivity : AppCompatActivity() {
                 imgAdapter.notifyDataSetChanged()
             }
         }
+        //check intent is new writing or modify writing
 
         val toolbar: Toolbar = findViewById(R.id.write_actionBar)
         setSupportActionBar(toolbar)
@@ -58,6 +59,7 @@ class WriteActivity : AppCompatActivity() {
             setDisplayShowCustomEnabled(true)
             setDisplayShowTitleEnabled(false)
         }
+        //add custom actionbar
 
         val lm = LinearLayoutManager(this@WriteActivity)
         lm.orientation = LinearLayoutManager.HORIZONTAL
@@ -71,6 +73,7 @@ class WriteActivity : AppCompatActivity() {
             }
         }
         imageList.adapter = imgAdapter
+        //setting image list recyclerview & adapter
 
         TedPermission.with(this)
             .setPermissionListener(object : PermissionListener {
@@ -90,6 +93,7 @@ class WriteActivity : AppCompatActivity() {
                 android.Manifest.permission.INTERNET
             )
             .check()
+        //check got permission
 
         addImageBt.setOnClickListener { showDialogList() }
 
@@ -131,6 +135,7 @@ class WriteActivity : AppCompatActivity() {
                 }
             }
         }
+        //setting onClick event modify, update mode & insert mode
     }
 
     private fun showDialogList() {
@@ -170,6 +175,7 @@ class WriteActivity : AppCompatActivity() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
+    //create how-to image add dialog
 
     private fun showDialogInput() {
         val builder = AlertDialog.Builder(this@WriteActivity)
@@ -202,6 +208,7 @@ class WriteActivity : AppCompatActivity() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
+    //create input image url dialog
 
     override fun onBackPressed() {
         super.onBackPressed()

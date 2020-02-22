@@ -1,10 +1,9 @@
 package com.example.myapplication
 
-import android.content.Context
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,6 +31,7 @@ class MainActivity : AppCompatActivity() {
       setDisplayShowCustomEnabled(true)
       setDisplayShowTitleEnabled(false)
     }
+    //add custom actionbar
 
     val lm = LinearLayoutManager(this@MainActivity)
     memoList.layoutManager = lm
@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
       }
 
     }
+    //setting memo list recyclerview & adapter
 
     val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     viewModel.getAll().observe(this, Observer {
@@ -57,21 +58,20 @@ class MainActivity : AppCompatActivity() {
       sorting()
       memoAdapter.notifyDataSetChanged()
     })
+    //load datas from local db
 
     fab.setOnClickListener {
       val writeIntent = Intent(applicationContext, WriteActivity::class.java)
       writeIntent.putExtra("isNew", true)
       startActivity(writeIntent)
     }
+    //move to write page
   }
 
   private fun sorting(){
     memoFormatList.sortBy {selector(it)}
     memoFormatList.reverse()
   }
-
-  private fun Context.toast(message:String){
-    Toast.makeText(applicationContext,message, Toast.LENGTH_LONG).show()
-  }
+  //sorting list bt modified time
 
 }

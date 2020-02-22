@@ -1,10 +1,9 @@
 package com.example.myapplication
 
-import android.content.Context
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -33,16 +32,19 @@ class DetailActivity : AppCompatActivity() {
             setDisplayShowCustomEnabled(true)
             setDisplayShowTitleEnabled(false)
         }
+        //add custom actionbar
 
         txtList.addAll(intent.extras?.getStringArrayList("txtList") as ArrayList<String>)
         detail_title.text = txtList[0]
         detail_content.text = txtList[1]
         detail_date.text = txtList[3]
+        //load data in view
 
         vpImgList.addAll(txtList[2].substring(1, txtList[2].length-1).split(", "))
         vpAdapter.notifyDataSetChanged()
         viewpager_detail.adapter = vpAdapter
         if(vpImgList[0]!="") tab_layout.setupWithViewPager(viewpager_detail, true)
+        //setting string to list for viewpager adapter`s list
 
         modify_Memo.setOnClickListener {
             val intentToModify = Intent(applicationContext, WriteActivity::class.java)
@@ -53,6 +55,7 @@ class DetailActivity : AppCompatActivity() {
         delete_Memo.setOnClickListener {
             showDialogDelete()
         }
+        //setting onClick event for modify button & delete button
     }
 
     private fun showDialogDelete(){
@@ -73,8 +76,5 @@ class DetailActivity : AppCompatActivity() {
         val alertDialog = builder.create()
         alertDialog.show()
     }
-
-    private fun Context.toast(message:String){
-        Toast.makeText(applicationContext,message, Toast.LENGTH_LONG).show()
-    }
+    //create delete dialog
 }
